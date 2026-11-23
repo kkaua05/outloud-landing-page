@@ -1,0 +1,158 @@
+/* ── Sparkle ───────────────────────────────────────────────── */
+.sparkle {
+  width: 1em;
+  height: 1em;
+  flex: none;
+}
+
+.sparkle--twinkle {
+  animation: twinkle 3.6s var(--ease-in-out) infinite;
+  animation-delay: var(--twinkle-delay, 0s);
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(0.62) rotate(45deg);
+  }
+}
+
+/* ── Circle badge ──────────────────────────────────────────── */
+.circle-badge {
+  --badge-bg: var(--royal);
+  --badge-fg: var(--cream);
+  --badge-accent: var(--pink);
+
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--badge-size, 8.5rem);
+  aspect-ratio: 1;
+}
+
+.circle-badge__ring {
+  width: 100%;
+  height: 100%;
+  animation: spin 22s linear infinite;
+}
+
+.circle-badge__disc {
+  fill: var(--badge-bg);
+}
+
+.circle-badge__text {
+  fill: var(--badge-fg);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.circle-badge__center {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--badge-accent);
+  font-size: calc(var(--badge-size, 8.5rem) * 0.26);
+}
+
+.circle-badge--pink {
+  --badge-bg: var(--pink);
+  --badge-fg: var(--cream);
+  --badge-accent: var(--royal);
+}
+
+.circle-badge--cream {
+  --badge-bg: var(--cream);
+  --badge-fg: var(--royal);
+  --badge-accent: var(--pink);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Orbit / lines ─────────────────────────────────────────── */
+.orbit,
+.speed-lines {
+  pointer-events: none;
+}
+
+/* ── Scribble ──────────────────────────────────────────────── */
+.scribble path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-ready .scribble path {
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 1.1s var(--ease-in-out) 0.45s;
+  }
+
+  .reveal-ready .is-revealed .scribble path,
+  .reveal-ready .scribble.is-revealed path {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ── Corner registration marks ─────────────────────────────── */
+.corner-marks {
+  position: absolute;
+  inset: var(--marks-inset, 1.25rem);
+  pointer-events: none;
+}
+
+.corner-marks__mark {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+}
+
+.corner-marks__mark::before,
+.corner-marks__mark::after {
+  content: '';
+  position: absolute;
+  background: currentColor;
+}
+
+.corner-marks__mark::before {
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+}
+
+.corner-marks__mark::after {
+  top: 50%;
+  left: 0;
+  height: 1px;
+  width: 100%;
+}
+
+.corner-marks__mark--tl {
+  top: 0;
+  left: 0;
+}
+
+.corner-marks__mark--tr {
+  top: 0;
+  right: 0;
+}
+
+.corner-marks__mark--bl {
+  bottom: 0;
+  left: 0;
+}
+
+.corner-marks__mark--br {
+  bottom: 0;
+  right: 0;
+}

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>{{SEO_TITLE}}</title>
+    <meta name="description" content="{{SEO_DESCRIPTION}}" />
+    <meta name="theme-color" content="#FC3B7F" />
+    <meta name="color-scheme" content="light" />
+
+    <!-- Open Graph / social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="{{BRAND_NAME}}" />
+    <meta property="og:title" content="{{SEO_TITLE}}" />
+    <meta property="og:description" content="{{SEO_DESCRIPTION}}" />
+    <meta property="og:url" content="{{OG_URL}}" />
+    <meta property="og:image" content="{{OG_IMAGE}}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Nike Dunk High Game Royal on a pink {{BRAND_NAME}} campaign background" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{SEO_TITLE}}" />
+    <meta name="twitter:description" content="{{SEO_DESCRIPTION}}" />
+    <meta name="twitter:image" content="{{OG_IMAGE}}" />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Critical resources for the first fold -->
+    <link rel="preload" href="/fonts/anton-latin-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/space-grotesk-latin-var.woff2" as="font" type="font/woff2" crossorigin />
+    <link
+      rel="preload"
+      as="image"
+      type="image/avif"
+      fetchpriority="high"
+      imagesrcset="/images/dunk-high-game-royal-400.avif 400w, /images/dunk-high-game-royal-640.avif 640w"
+      imagesizes="(max-width: 640px) 62vw, (max-width: 1023px) 46vw, 30vw"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <p style="padding: 2rem; font-family: system-ui, sans-serif">
+        {{BRAND_NAME}} — Nike Dunk High “Game Royal”. Please enable JavaScript to view this page.
+      </p>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

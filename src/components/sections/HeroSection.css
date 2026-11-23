@@ -1,0 +1,599 @@
+/* ─────────────────────────────────────────────────────────────
+   HERO — pink campaign poster
+   Layers: wordmark (1) → orbit/lines (1) → product (2) → copy (3)
+   ───────────────────────────────────────────────────────────── */
+.hero {
+  /* Product height and wordmark size are tied to the viewport so the
+     first fold (wordmark, product, headline and CTAs) fits laptops too. */
+  --shoe-h: clamp(24rem, 62svh, 42rem);
+  /* Horizontal offset of the product from the centre (asymmetry). */
+  --shoe-x: clamp(0px, 5vw, 6rem);
+  --wm-max: max(14rem, calc(160svh - 51rem));
+  /* Fallback ≈ OUTLOUD in Anton (3.21em wide) until the JS fit runs. */
+  --wm-size: min(var(--fit-size, calc((100vw - 2 * var(--gutter)) / 3.21)), var(--wm-max));
+  /* Anton caps are 0.875em tall: a 0.9 line box hugs them exactly. */
+  --wm-h: calc(var(--wm-size) * 0.9);
+  --wm-block: var(--wm-h);
+  /* How far the product may rise into the meta row. */
+  --meta-overlap: 2.5rem;
+
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: max(40rem, 100svh);
+  background: var(--pink);
+  color: var(--ink);
+}
+
+.hero__inner {
+  position: relative;
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 1fr auto;
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: calc(var(--header-h) + 0.25rem) var(--gutter) clamp(2.25rem, 4vw, 3.5rem);
+}
+
+/* Meta row -------------------------------------------------- */
+.hero__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.875rem;
+  border-top: 1px solid var(--hairline-ink);
+}
+
+.hero__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.5rem 0.875rem;
+  border: var(--border) solid var(--ink);
+  border-radius: var(--radius-pill);
+}
+
+.hero__tag-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--royal);
+}
+
+.hero__meta-group {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.hero__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero__meta-spark {
+  font-size: 0.875rem;
+  color: var(--royal);
+}
+
+/* Visual: wordmark in flow, product centred on it ------------ */
+.hero__visual {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  margin-top: max(0.5rem, calc((var(--shoe-h) - var(--wm-block)) / 2 - var(--meta-overlap)));
+  margin-bottom: clamp(1.25rem, 2.6vw, 2.5rem);
+}
+
+.hero__wordmark {
+  z-index: var(--z-decor);
+  display: grid;
+  justify-items: center;
+  width: 100%;
+  /* Clip to the cap box: removes the font's tall ascent/descent from the
+     page's scrollable area and masks the letters while they rise in. */
+  overflow: clip;
+  color: var(--cream);
+  font-family: var(--font-display);
+  line-height: 0.9;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+}
+
+.hero__wordmark-line {
+  display: inline-block;
+  font-size: var(--wm-size);
+}
+
+.hero__wordmark-line--echo {
+  display: none;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--cream);
+  opacity: 0.85;
+}
+
+.hero__letter {
+  display: inline-block;
+}
+
+/* Stage ------------------------------------------------------ */
+.hero__stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: var(--z-product);
+  height: var(--shoe-h);
+  aspect-ratio: 640 / 991;
+  translate: calc(-50% + var(--shoe-x)) -50%;
+}
+
+.hero__product {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__float {
+  height: 100%;
+  will-change: transform;
+}
+
+.hero__shoe,
+.hero__shoe img {
+  width: 100%;
+  height: 100%;
+}
+
+.hero__shoe img {
+  object-fit: contain;
+  filter: drop-shadow(0 1.75rem 1.75rem color-mix(in srgb, var(--ink) 22%, transparent));
+}
+
+.hero__shadow {
+  position: absolute;
+  left: 2%;
+  bottom: -5%;
+  width: 70%;
+  height: 7%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--ink) 34%, transparent), transparent);
+  filter: blur(4px);
+}
+
+.hero__orbit {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  width: 230%;
+  height: 46%;
+  color: var(--royal);
+  opacity: 0.6;
+  transform: translate(-50%, -50%) rotate(-14deg);
+}
+
+/* Motion trail: the shoe steps down-left, so lines trail up-right. */
+.hero__speed {
+  position: absolute;
+  top: 13%;
+  right: -44%;
+  width: 36%;
+  color: var(--cream);
+  transform: rotate(-52deg);
+}
+
+.hero__badge {
+  --badge-size: clamp(6.5rem, 4rem + 5vw, 9.25rem);
+  position: absolute;
+  bottom: 6%;
+  right: -74%;
+}
+
+.hero__spark {
+  position: absolute;
+  pointer-events: none;
+}
+
+.hero__spark--a {
+  top: 8%;
+  left: -24%;
+  font-size: clamp(2rem, 1.2rem + 2vw, 3.5rem);
+  color: var(--cream);
+}
+
+.hero__spark--b {
+  top: 30%;
+  right: -24%;
+  font-size: clamp(1rem, 0.6rem + 1vw, 1.75rem);
+  color: var(--royal);
+}
+
+.hero__spark--c {
+  top: 44%;
+  left: -40%;
+  font-size: 0.875rem;
+  color: var(--ink);
+}
+
+/* Bottom row ------------------------------------------------- */
+.hero__bottom {
+  position: relative;
+  z-index: var(--z-content);
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 1.5rem;
+  align-items: end;
+}
+
+.hero__copy {
+  grid-column: 1 / span 6;
+}
+
+.hero__title {
+  font-size: clamp(2.875rem, 0.4rem + 4.6vw, 5.5rem);
+  line-height: 0.9;
+}
+
+@media (min-width: 1024px) {
+  .hero__title {
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1180px) {
+  .hero__copy {
+    grid-column: 1 / span 7;
+  }
+}
+
+.hero__title-accent {
+  color: var(--cream);
+}
+
+.hero__sub {
+  max-width: 44ch;
+  margin-top: 1rem;
+  font-size: var(--fs-lead);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.hero__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  margin-top: clamp(1.5rem, 2.6vw, 2.25rem);
+}
+
+.hero__aside {
+  grid-column: 10 / -1;
+  justify-self: end;
+  display: grid;
+  justify-items: end;
+  gap: 1.25rem;
+  text-align: right;
+}
+
+.hero__index {
+  display: grid;
+  gap: 0.25rem;
+  padding-right: 1rem;
+  border-right: 1.5px solid var(--ink);
+}
+
+.hero__scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.hero__scroll-icon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: var(--border) solid var(--ink);
+  border-radius: 50%;
+  transition:
+    background-color var(--dur-base) var(--ease-out),
+    color var(--dur-base) var(--ease-out);
+}
+
+.hero__scroll-icon svg {
+  animation: nudge-down 2.4s var(--ease-in-out) infinite;
+}
+
+@media (hover: hover) {
+  .hero__scroll:hover .hero__scroll-icon {
+    background: var(--ink);
+    color: var(--pink);
+  }
+}
+
+/* Marquee crossing into the next section --------------------- */
+.hero__marquee {
+  z-index: 4;
+  margin-bottom: calc(-1 * clamp(1.5rem, 2.4vw, 2.25rem));
+}
+
+/* Motion ----------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  .hero__letter {
+    animation: letter-rise 1.1s var(--ease-out) both;
+    animation-delay: calc(120ms + var(--i) * 55ms);
+  }
+
+  .hero__wordmark-line--echo {
+    animation: fade-in 1.2s var(--ease-out) 0.7s both;
+  }
+
+  .hero__product {
+    animation: product-in 1.4s var(--ease-out) 0.35s both;
+  }
+
+  .hero__float {
+    animation: float 7s var(--ease-in-out) 1.75s infinite;
+  }
+
+  .hero__shadow {
+    animation: shadow-breathe 7s var(--ease-in-out) 1.75s infinite;
+  }
+
+  .hero__orbit,
+  .hero__speed,
+  .hero__badge,
+  .hero__spark {
+    animation: fade-in 1s var(--ease-out) 1s both;
+  }
+
+  .hero__badge {
+    animation-name: badge-in;
+    animation-timing-function: var(--ease-spring);
+  }
+
+  .hero__meta,
+  .hero__copy > *,
+  .hero__aside {
+    animation: rise-in 1s var(--ease-out) both;
+  }
+
+  .hero__meta {
+    animation-delay: 0.15s;
+  }
+
+  .hero__title {
+    animation-delay: 0.55s;
+  }
+
+  .hero__sub {
+    animation-delay: 0.65s;
+  }
+
+  .hero__ctas {
+    animation-delay: 0.75s;
+  }
+
+  .hero__aside {
+    animation-delay: 0.9s;
+  }
+}
+
+@keyframes letter-rise {
+  from {
+    opacity: 0;
+    transform: translateY(32%) skewY(6deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes product-in {
+  from {
+    opacity: 0;
+    transform: translateY(8%) scale(0.92) rotate(5deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-2.2%) rotate(-1.4deg);
+  }
+}
+
+@keyframes shadow-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.84);
+    opacity: 0.65;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes badge-in {
+  from {
+    opacity: 0;
+    transform: scale(0.4) rotate(-40deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes nudge-down {
+  0%,
+  100% {
+    transform: translateY(-2px);
+  }
+  50% {
+    transform: translateY(3px);
+  }
+}
+
+/* Tablet ----------------------------------------------------- */
+@media (max-width: 1023px) {
+  .hero {
+    --shoe-h: clamp(17rem, 52svh, 35rem);
+    --shoe-x: 0px;
+    --wm-block: calc(var(--wm-h) * 3);
+    min-height: auto;
+  }
+
+  .hero__inner {
+    grid-template-rows: auto auto auto;
+  }
+
+  .hero__visual {
+    --gap: clamp(1rem, 4vw, 2rem);
+    margin-block: max(var(--gap), calc((var(--shoe-h) - var(--wm-block)) / 2 + var(--gap)));
+  }
+
+  .hero__wordmark-line--echo {
+    display: inline-block;
+  }
+
+  .hero__meta-item--tones {
+    display: none;
+  }
+
+  .hero__badge {
+    right: -44%;
+    bottom: 4%;
+  }
+
+  .hero__speed {
+    right: -30%;
+    top: 0;
+    width: 28%;
+  }
+
+  .hero__copy {
+    grid-column: 1 / span 8;
+  }
+
+  .hero__aside {
+    grid-column: 9 / -1;
+  }
+
+  .hero__index {
+    display: none;
+  }
+}
+
+/* Mobile ----------------------------------------------------- */
+@media (max-width: 640px) {
+  .hero__meta {
+    justify-content: center;
+  }
+
+  .hero__meta-group {
+    display: none;
+  }
+
+  .hero__badge {
+    --badge-size: 5.25rem;
+    right: -16%;
+    bottom: 2%;
+  }
+
+  .hero__speed {
+    right: -14%;
+    width: 22%;
+  }
+
+  .hero__spark--a {
+    left: -8%;
+  }
+
+  .hero__spark--c {
+    left: -12%;
+  }
+
+  .hero__spark--b {
+    right: -8%;
+  }
+
+  .hero__orbit {
+    width: 160%;
+  }
+
+  .hero__bottom {
+    grid-template-columns: 1fr;
+  }
+
+  .hero__copy {
+    grid-column: 1;
+    text-align: center;
+  }
+
+  .hero__sub {
+    margin-inline: auto;
+  }
+
+  .hero__ctas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero__ctas .btn--with-icon {
+    justify-content: space-between;
+    padding-left: 1.75rem;
+  }
+
+  .hero__aside {
+    display: none;
+  }
+}
+
+/* Landscape phones: a single wordmark line keeps the hero compact */
+@media (max-height: 520px) and (orientation: landscape) {
+  .hero {
+    --wm-block: var(--wm-h);
+    --wm-size: min(var(--fit-size, calc((100vw - 2 * var(--gutter)) / 3.21)), 44svh);
+    --shoe-h: 80svh;
+  }
+
+  .hero .hero__wordmark-line--echo {
+    display: none;
+  }
+}

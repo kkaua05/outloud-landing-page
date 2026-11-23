@@ -1,0 +1,215 @@
+.story {
+  position: relative;
+  padding-block: calc(var(--section-pad) + 1rem) var(--section-pad);
+  background: var(--cream);
+  color: var(--royal);
+}
+
+.story__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-areas:
+    'index index index index index index . visual visual visual visual visual'
+    'title title title title title title . visual visual visual visual visual'
+    'text  text  text  text  text  .     . visual visual visual visual visual'
+    'pill  pill  pill  pill  pill  pill  . visual visual visual visual visual';
+  grid-template-rows: auto auto auto 1fr;
+  column-gap: 1.5rem;
+}
+
+.story__index {
+  grid-area: index;
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.story__title {
+  grid-area: title;
+  position: relative;
+  font-size: var(--fs-h2);
+  color: var(--royal);
+}
+
+.story__title-accent {
+  color: var(--pink);
+}
+
+.story__title-spark {
+  display: inline-block;
+  margin-left: 0.08em;
+  font-size: 0.32em;
+  color: var(--royal);
+  vertical-align: top;
+}
+
+.story__text {
+  grid-area: text;
+  max-width: 34rem;
+  margin-top: clamp(1.75rem, 3vw, 2.5rem);
+  color: var(--ink);
+  font-size: var(--fs-lead);
+  line-height: 1.55;
+}
+
+/* Pillars ---------------------------------------------------- */
+.story__pillars {
+  grid-area: pill;
+  align-self: end;
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+  border-top: 1.5px solid var(--royal);
+}
+
+.story__pillar {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto;
+  align-items: center;
+  padding-block: clamp(0.875rem, 1.6vw, 1.25rem);
+  border-bottom: 1px solid var(--hairline-royal);
+}
+
+.story__pillar-num {
+  color: var(--pink);
+}
+
+.story__pillar-label {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.story__pillar-spark {
+  font-size: 1rem;
+  color: var(--royal);
+}
+
+/* Visual ----------------------------------------------------- */
+.story__visual {
+  grid-area: visual;
+  position: relative;
+  align-self: center;
+  width: 100%;
+  max-width: 34rem;
+  justify-self: end;
+  padding: 4% 0 3.5rem;
+}
+
+.story__frame {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 999px 999px var(--radius-m) var(--radius-m);
+  background: var(--royal);
+}
+
+.story__frame::before {
+  content: '';
+  position: absolute;
+  inset: 0.875rem;
+  border: 1px solid var(--hairline-cream);
+  border-radius: inherit;
+}
+
+.story__frame-word {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 2rem + 8vw, 9.5rem);
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1.25px color-mix(in srgb, var(--cream) 45%, transparent);
+  transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+.story__shoe {
+  position: absolute;
+  top: 6%;
+  left: -14%;
+  width: 78%;
+  rotate: -18deg;
+}
+
+.story__shoe img {
+  width: 100%;
+  filter: drop-shadow(0 2rem 2rem color-mix(in srgb, var(--ink) 30%, transparent));
+}
+
+.story__badge {
+  --badge-size: clamp(6.5rem, 4.5rem + 4vw, 8.75rem);
+  position: absolute;
+  right: -1.5rem;
+  bottom: 24%;
+}
+
+.story__spark {
+  position: absolute;
+  top: 2%;
+  right: 6%;
+  font-size: clamp(2rem, 1.3rem + 2vw, 3.25rem);
+  color: var(--pink);
+}
+
+.story__caption {
+  position: absolute;
+  right: 0;
+  bottom: 0.5rem;
+  max-width: 62%;
+  text-align: right;
+  color: var(--ink-soft);
+}
+
+/* Subtle scroll-linked parallax where supported */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .story__shoe {
+      animation: story-parallax linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+  }
+}
+
+@keyframes story-parallax {
+  from {
+    translate: 0 3rem;
+  }
+  to {
+    translate: 0 -3rem;
+  }
+}
+
+/* Responsive ------------------------------------------------- */
+@media (max-width: 900px) {
+  .story__grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'index'
+      'title'
+      'text'
+      'visual'
+      'pill';
+    grid-template-rows: none;
+  }
+
+  .story__visual {
+    justify-self: center;
+    max-width: min(26rem, 88%);
+    margin-top: clamp(3rem, 10vw, 4.5rem);
+  }
+
+  .story__visual {
+    padding-bottom: 4.5rem;
+  }
+
+  .story__shoe {
+    left: 3%;
+    width: 70%;
+  }
+
+  .story__badge {
+    right: -6%;
+    bottom: 26%;
+  }
+}

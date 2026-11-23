@@ -1,0 +1,84 @@
+/* ─────────────────────────────────────────────────────────────
+   DESIGN TOKENS — OUTLOUD
+   Palette: Pink #FC3B7F · Cream #FEF1CF · Royal #0032A8
+   Contrast notes (WCAG):
+     cream on royal 9.2:1 · ink on pink 5.7:1 · ink on cream 17:1
+     cream on pink / pink on cream ≈ 3.1:1 → large display type only
+   ───────────────────────────────────────────────────────────── */
+
+@font-face {
+  font-family: 'Anton';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/anton-latin-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/fonts/space-grotesk-latin-var.woff2') format('woff2');
+}
+
+:root {
+  /* Colour */
+  --pink: #fc3b7f;
+  --cream: #fef1cf;
+  --royal: #0032a8;
+  --ink: #0e0b16;
+  --white: #ffffff;
+  --pink-shade: color-mix(in srgb, var(--pink) 78%, var(--ink));
+  --royal-shade: color-mix(in srgb, var(--royal) 80%, var(--ink));
+  --cream-deep: color-mix(in srgb, var(--cream) 86%, var(--pink));
+  --ink-soft: color-mix(in srgb, var(--ink) 72%, transparent);
+  /* Deep pink for small error text — 5.3:1 on cream */
+  --alert: #c4114f;
+  --hairline-ink: color-mix(in srgb, var(--ink) 18%, transparent);
+  --hairline-royal: color-mix(in srgb, var(--royal) 22%, transparent);
+  --hairline-cream: color-mix(in srgb, var(--cream) 30%, transparent);
+
+  /* Type */
+  --font-display: 'Anton', 'Impact', 'Haettenschweiler', 'Arial Narrow Bold', sans-serif;
+  --font-body: 'Space Grotesk', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --fs-micro: 0.6875rem; /* 11px */
+  --fs-small: 0.8125rem; /* 13px */
+  --fs-body: clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
+  --fs-lead: clamp(1.0625rem, 0.98rem + 0.45vw, 1.3125rem);
+  --fs-h3: clamp(1.5rem, 1.15rem + 1.2vw, 2.25rem);
+  --fs-h2: clamp(3.25rem, 1.4rem + 7.4vw, 9.5rem);
+  --fs-mega: clamp(4.5rem, 1.5rem + 12.5vw, 15.5rem);
+
+  --tracking-micro: 0.16em;
+  --tracking-wide: 0.08em;
+
+  /* Layout */
+  --gutter: clamp(1rem, 3.6vw, 3.5rem);
+  --container: 1600px;
+  --header-h: clamp(4rem, 3.4rem + 1.6vw, 5rem);
+  --section-pad: clamp(5rem, 3rem + 8vw, 11rem);
+
+  /* Shape */
+  --radius-pill: 999px;
+  --radius-s: 6px;
+  --radius-m: 14px;
+  --border: 1.5px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 180ms;
+  --dur-base: 320ms;
+  --dur-slow: 700ms;
+
+  /* Depth */
+  --z-decor: 1;
+  --z-product: 2;
+  --z-content: 3;
+  --z-header: 50;
+  --z-overlay: 90;
+  --z-drawer: 100;
+}

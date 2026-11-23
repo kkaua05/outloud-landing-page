@@ -1,0 +1,121 @@
+.gallery {
+  --main-h: clamp(22rem, 52vw, 38rem);
+
+  position: relative;
+  z-index: var(--z-product);
+  display: grid;
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  width: 100%;
+}
+
+.gallery__main {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: var(--main-h);
+  overflow: hidden;
+  /* Feathered edges so zoomed crops dissolve into the stage instead of
+     ending on a hard rectangle. */
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent),
+    linear-gradient(transparent, #000 5%, #000 95%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent),
+    linear-gradient(transparent, #000 5%, #000 95%, transparent);
+  mask-composite: intersect;
+}
+
+.gallery__zoom {
+  height: calc(var(--main-h) * 0.92);
+  aspect-ratio: 640 / 991;
+  transition:
+    transform 850ms var(--ease-out),
+    transform-origin 850ms var(--ease-out);
+}
+
+.gallery__image,
+.gallery__image img {
+  width: 100%;
+  height: 100%;
+}
+
+.gallery__image img {
+  object-fit: contain;
+  filter: drop-shadow(0 1.25rem 1.25rem color-mix(in srgb, var(--ink) 20%, transparent));
+  transition: filter var(--dur-slow) var(--ease-out);
+}
+
+.gallery__zoom.is-zoomed .gallery__image img {
+  filter: none;
+}
+
+/* Thumbs ----------------------------------------------------- */
+.gallery__thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.5rem, 1.2vw, 0.875rem);
+}
+
+.gallery__thumb {
+  display: grid;
+  gap: 0.5rem;
+  justify-items: center;
+  text-align: center;
+  color: var(--ink);
+}
+
+.gallery__thumb-frame {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: var(--border) solid transparent;
+  border-radius: var(--radius-m);
+  background: color-mix(in srgb, var(--cream) 30%, var(--pink));
+  transition:
+    border-color var(--dur-base) var(--ease-out),
+    background-color var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out);
+}
+
+.gallery__thumb-frame img {
+  height: 84%;
+  width: auto;
+  object-fit: contain;
+}
+
+.gallery__thumb-label {
+  font-size: 0.625rem;
+  opacity: 0.75;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+
+.gallery__thumb.is-active .gallery__thumb-frame {
+  border-color: var(--ink);
+  background: var(--cream);
+}
+
+.gallery__thumb.is-active .gallery__thumb-label {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .gallery__thumb:hover .gallery__thumb-frame {
+    transform: translateY(-3px);
+  }
+
+  .gallery__thumb:hover .gallery__thumb-label {
+    opacity: 1;
+  }
+}
+
+.gallery__thumb:focus-visible {
+  outline: none;
+}
+
+.gallery__thumb:focus-visible .gallery__thumb-frame {
+  outline: 2px solid var(--royal);
+  outline-offset: 3px;
+}

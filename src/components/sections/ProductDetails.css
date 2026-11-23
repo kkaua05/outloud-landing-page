@@ -1,0 +1,229 @@
+.details {
+  position: relative;
+  padding-block: 0 var(--section-pad);
+  background: var(--cream);
+}
+
+.details__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 1.5rem;
+  align-items: start;
+}
+
+/* Pink product stage ----------------------------------------- */
+.details__stage {
+  --marks-inset: 1.25rem;
+
+  position: sticky;
+  top: calc(var(--header-h) + 1rem);
+  grid-column: 1 / span 7;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: clamp(3.25rem, 6vw, 5rem) clamp(1.25rem, 3vw, 2.5rem) 3.25rem;
+  border-radius: var(--radius-m);
+  background: var(--pink);
+  color: var(--cream);
+  isolation: isolate;
+}
+
+.details__stage-word {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  z-index: -1;
+  font-family: var(--font-display);
+  font-size: clamp(9rem, 3rem + 20vw, 22rem);
+  line-height: 1;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 1.5px color-mix(in srgb, var(--cream) 60%, transparent);
+  transform: translate(-50%, -50%);
+  user-select: none;
+}
+
+.details__stage-meta {
+  position: absolute;
+  top: 1.25rem;
+  left: 3rem;
+  right: 3rem;
+  display: flex;
+  justify-content: space-between;
+  color: var(--ink);
+}
+
+.details__stage-spark {
+  position: absolute;
+  top: 16%;
+  right: 12%;
+  font-size: clamp(1.75rem, 1rem + 2vw, 3rem);
+  color: var(--cream);
+}
+
+/* Info column ------------------------------------------------- */
+.details__info {
+  grid-column: 9 / -1;
+  display: grid;
+  align-content: start;
+  padding-top: clamp(1rem, 3vw, 2.5rem);
+  color: var(--ink);
+}
+
+.details__index {
+  color: var(--royal);
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+
+.details__eyebrow {
+  color: var(--royal);
+}
+
+.details__title {
+  margin-top: 0.75rem;
+  font-size: clamp(3rem, 1.6rem + 4.2vw, 6.25rem);
+  color: var(--royal);
+}
+
+.details__colorway {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.875rem;
+  margin-top: 1.25rem;
+}
+
+.details__swatches {
+  display: inline-flex;
+}
+
+.details__swatch {
+  width: 1.375rem;
+  height: 1.375rem;
+  border-radius: 50%;
+  border: var(--border) solid var(--ink);
+}
+
+.details__swatch + .details__swatch {
+  margin-left: -0.4rem;
+}
+
+.details__swatch--royal {
+  background: var(--royal);
+}
+
+.details__swatch--white {
+  background: var(--white);
+}
+
+.details__colorway-name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--pink);
+}
+
+.details__colorway-tones {
+  color: var(--ink-soft);
+}
+
+.details__summary {
+  max-width: 34rem;
+  margin-top: 1.5rem;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--ink) 85%, transparent);
+}
+
+.details__purchase {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: clamp(2rem, 3.5vw, 2.75rem);
+  padding-top: clamp(1.5rem, 2.5vw, 2rem);
+  border-top: 1.5px solid var(--ink);
+}
+
+.details__price-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.details__price-label {
+  color: var(--ink-soft);
+}
+
+.details__price {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 1.4rem + 1vw, 2.25rem);
+  line-height: 1;
+  color: var(--royal);
+}
+
+.details__price.is-on-request {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.details__add {
+  min-height: 3.75rem;
+}
+
+.details__add.is-added {
+  --btn-bg: var(--ink);
+}
+
+.details__note {
+  color: var(--ink-soft);
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Responsive -------------------------------------------------- */
+@media (max-width: 1100px) {
+  .details__stage {
+    grid-column: 1 / span 7;
+  }
+
+  .details__info {
+    grid-column: 8 / -1;
+  }
+}
+
+/* Mobile reading order: heading → product stage → description → purchase */
+@media (max-width: 900px) {
+  .details__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .details__info {
+    display: contents;
+  }
+
+  .details__info > * {
+    grid-column: 1;
+  }
+
+  .details__stage {
+    position: relative;
+    top: auto;
+    grid-column: 1;
+    order: 5;
+    margin-top: clamp(1.75rem, 6vw, 2.5rem);
+  }
+
+  .details__summary {
+    order: 6;
+    margin-top: clamp(1.75rem, 6vw, 2.5rem);
+  }
+
+  .details__purchase {
+    order: 7;
+  }
+}
