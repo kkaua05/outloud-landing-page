@@ -4,10 +4,10 @@ import { siteConfig } from '../../config/site'
 import { useFitText } from '../../hooks/useFitText'
 import { ButtonLink } from '../ui/Button'
 import { Sparkle } from '../ui/Decor'
-import { ArrowRightIcon, ArrowUpIcon, InstagramIcon, MailIcon } from '../ui/Icons'
+import { ArrowRightIcon, ArrowUpIcon, ArrowUpRightIcon, InstagramIcon, MailIcon } from '../ui/Icons'
 import './Footer.css'
 
-const { brand, contact, legal } = siteConfig
+const { brand, contact, credit, legal } = siteConfig
 const YEAR = new Date().getFullYear()
 
 export function Footer() {
@@ -88,6 +88,34 @@ export function Footer() {
             {brand.name}
           </span>
         </p>
+
+        <div className="footer__credit">
+          <span className="footer__credit-label micro">Design &amp; development</span>
+          <a
+            className="studio-credit"
+            href={credit.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Design and development by ${credit.name} ${credit.descriptor} (opens in a new tab)`}
+          >
+            <img
+              className="studio-credit__logo"
+              src="/images/zynk-logo-96.webp"
+              srcSet="/images/zynk-logo-96.webp 1x, /images/zynk-logo-192.webp 2x"
+              alt=""
+              width={36}
+              height={36}
+              loading="lazy"
+              decoding="async"
+            />
+            <span className="studio-credit__text">
+              <span className="studio-credit__name">{credit.name}</span>
+              <span className="studio-credit__descriptor micro">{credit.descriptor}</span>
+            </span>
+            <span className="studio-credit__handle micro">{credit.handle}</span>
+            <ArrowUpRightIcon size={16} className="studio-credit__arrow" />
+          </a>
+        </div>
 
         <div className="footer__bottom">
           <p>

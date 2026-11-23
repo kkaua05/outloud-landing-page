@@ -11,8 +11,17 @@
 ![Bundle](https://img.shields.io/badge/p%C3%A1gina-202%20KB-0032A8?labelColor=0e0b16)
 ![CLS](https://img.shields.io/badge/CLS-0-success?labelColor=0e0b16)
 ![License](https://img.shields.io/badge/license-MIT-FEF1CF?labelColor=0e0b16)
+[![ZYNK](https://img.shields.io/badge/desenvolvido%20por-ZYNK%20Solu%C3%A7%C3%B5es%20Digitais-6D28D9?labelColor=0e0b16)](https://www.instagram.com/zynk.solutions/)
 
 <img src="docs/screenshots/hero-desktop.jpg" alt="Hero da landing page OUTLOUD: wordmark gigante em creme sobre fundo rosa com o Nike Dunk High Game Royal flutuando ao centro" width="100%" />
+
+<br />
+
+<a href="https://www.instagram.com/zynk.solutions/">
+  <img src="docs/zynk-logo.png" alt="Logo da ZYNK Soluções Digitais" width="72" />
+</a>
+<br />
+<sub>Projeto idealizado, desenhado e desenvolvido pela <a href="https://www.instagram.com/zynk.solutions/"><b>ZYNK Soluções Digitais</b></a></sub>
 
 </div>
 
@@ -26,7 +35,7 @@
 - **Engenharia de produto real** — seletor de tamanho acessível, carrinho com estado persistido, validações e estados vazios/erro tratados.
 - **Qualidade mensurável** — Core Web Vitals, navegação por teclado, `prefers-reduced-motion`, 11 larguras de tela verificadas sem scroll horizontal.
 
-> **Projeto de portfólio, sem fins comerciais.** Nike e Dunk são marcas registradas da Nike, Inc. Nenhum preço, estoque, avaliação ou especificação técnica foi inventado: tudo que é comercial é configurável e, quando vazio, a interface mostra um estado honesto (“Price on request”, “coming soon”).
+> **Projeto de portfólio da [ZYNK Soluções Digitais](https://www.instagram.com/zynk.solutions/), sem fins comerciais.** Nike e Dunk são marcas registradas da Nike, Inc. Nenhum preço, estoque, avaliação ou especificação técnica foi inventado: tudo que é comercial é configurável e, quando vazio, a interface mostra um estado honesto (“Price on request”, “coming soon”).
 
 ---
 
@@ -55,6 +64,9 @@
   <tr>
     <td width="50%"><img src="docs/screenshots/campaign-desktop.jpg" alt="Seção campanha OWN YOUR STYLE sobre fundo azul royal" /><br /><sub><b>Campaign</b> — tipografia oversized com contorno</sub></td>
     <td width="50%"><img src="docs/screenshots/bag-desktop.jpg" alt="Drawer da sacola com item, quantidade e checkout desativado" /><br /><sub><b>Bag</b> — drawer com quantidade, remoção e subtotal</sub></td>
+  </tr>
+  <tr>
+    <td colspan="2"><img src="docs/screenshots/footer-desktop.jpg" alt="Rodapé com wordmark gigante e assinatura da ZYNK Soluções Digitais" /><br /><sub><b>Footer</b> — wordmark, navegação e crédito do estúdio</sub></td>
   </tr>
 </table>
 
@@ -184,10 +196,21 @@ O recorte do tênis foi feito reaplicando a máscara do PNG recortado sobre a fo
 
 ---
 
-## Autor
+## Desenvolvido por
 
-Feito por **[@kkaua05](https://github.com/kkaua05)**. Se o projeto te interessou, fico à disposição para conversar.
+<table>
+  <tr>
+    <td width="96" align="center"><a href="https://www.instagram.com/zynk.solutions/"><img src="docs/zynk-logo.png" alt="ZYNK Soluções Digitais" width="80" /></a></td>
+    <td>
+      <b>ZYNK Soluções Digitais</b><br />
+      Soluções digitais.<br />
+      Instagram: <a href="https://www.instagram.com/zynk.solutions/">@zynk.solutions</a> · GitHub: <a href="https://github.com/kkaua05">@kkaua05</a>
+    </td>
+  </tr>
+</table>
+
+Se o projeto te interessou, fico à disposição para conversar.
 
 ## Licença
 
-Código sob licença [MIT](LICENSE). Marcas e imagem do produto pertencem a seus respectivos titulares.
+Código sob licença [MIT](LICENSE) © 2026 ZYNK Soluções Digitais. Marcas e imagem do produto pertencem a seus respectivos titulares.

@@ -15,6 +15,7 @@ function siteMetaPlugin(): Plugin {
     BRAND_NAME: siteConfig.brand.name,
     SEO_TITLE: siteConfig.seo.title,
     SEO_DESCRIPTION: siteConfig.seo.description,
+    AUTHOR: `${siteConfig.credit.name} ${siteConfig.credit.descriptor}`,
     OG_IMAGE: `${siteUrl}/og-image.jpg`,
     OG_URL: siteUrl ? `${siteUrl}/` : '/',
   }

@@ -3,6 +3,15 @@
   "private": true,
   "version": "1.0.0",
   "description": "Sneaker drop landing page (Nike Dunk High Game Royal) with Y2K streetwear art direction, accessible cart and zero UI-library dependencies.",
+  "author": {
+    "name": "ZYNK Soluções Digitais",
+    "url": "https://www.instagram.com/zynk.solutions/"
+  },
+  "homepage": "https://github.com/kkaua05/outloud-landing-page#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kkaua05/outloud-landing-page.git"
+  },
   "license": "MIT",
   "type": "module",
   "scripts": {

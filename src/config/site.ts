@@ -88,6 +88,14 @@ export const siteConfig = {
     instagramUrl: '',
   },
 
+  /** Studio that designed and built this site — shown in the footer credit. */
+  credit: {
+    name: 'ZYNK',
+    descriptor: 'Soluções Digitais',
+    url: 'https://www.instagram.com/zynk.solutions/',
+    handle: '@zynk.solutions',
+  },
+
   legal: {
     trademarkNotice: 'Nike and Dunk are trademarks of Nike, Inc.',
   },
