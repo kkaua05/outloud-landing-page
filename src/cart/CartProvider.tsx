@@ -5,6 +5,7 @@ import {
   cartReducer,
   loadItems,
   saveItems,
+  subscribeToItems,
   type CartContextValue,
   type CartItem,
 } from './cartStore'
@@ -26,6 +27,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     saveItems(state.items)
   }, [state.items])
+
+  useEffect(
+    () => subscribeToItems((items) => dispatch({ type: 'hydrate', items }), isValidLine, MAX),
+    [],
+  )
 
   const announce = useCallback((text: string) => {
     setAnnouncement((previous) => ({ id: previous.id + 1, text }))

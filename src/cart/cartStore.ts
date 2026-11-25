@@ -17,6 +17,7 @@ export type CartAction =
   | { type: 'remove'; productId: string; size: string }
   | { type: 'open' }
   | { type: 'close' }
+  | { type: 'hydrate'; items: CartItem[] }
 
 const sameLine = (item: CartItem, productId: string, size: string) =>
   item.productId === productId && item.size === size
@@ -59,6 +60,8 @@ export function cartReducer(state: CartState, action: CartAction): CartState {
       return { ...state, isOpen: true }
     case 'close':
       return { ...state, isOpen: false }
+    case 'hydrate':
+      return { ...state, items: action.items }
   }
 }
 
@@ -84,7 +87,18 @@ function isCartItem(value: unknown): value is CartItem {
  */
 export function loadItems(isValidLine: (item: CartItem) => boolean, max: number): CartItem[] {
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY)
+    return parseItems(window.localStorage.getItem(STORAGE_KEY), isValidLine, max)
+  } catch {
+    return []
+  }
+}
+
+function parseItems(
+  raw: string | null,
+  isValidLine: (item: CartItem) => boolean,
+  max: number,
+): CartItem[] {
+  try {
     if (!raw) return []
     const parsed: unknown = JSON.parse(raw)
     if (!Array.isArray(parsed)) return []
@@ -95,6 +109,23 @@ export function loadItems(isValidLine: (item: CartItem) => boolean, max: number)
   } catch {
     return []
   }
+}
+
+/**
+ * Calls `onChange` when the bag is modified in another tab, so tabs never
+ * overwrite each other's saved bag with stale state.
+ */
+export function subscribeToItems(
+  onChange: (items: CartItem[]) => void,
+  isValidLine: (item: CartItem) => boolean,
+  max: number,
+) {
+  const onStorage = (event: StorageEvent) => {
+    if (event.key !== STORAGE_KEY && event.key !== null) return
+    onChange(parseItems(event.newValue, isValidLine, max))
+  }
+  window.addEventListener('storage', onStorage)
+  return () => window.removeEventListener('storage', onStorage)
 }
 
 export function saveItems(items: CartItem[]) {
