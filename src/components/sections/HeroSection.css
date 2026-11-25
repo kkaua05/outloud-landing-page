@@ -146,6 +146,53 @@
   will-change: transform;
 }
 
+/* Pointer tilt: --px / --py (−1 → 1) are written by usePointerParallax.
+   Kept on its own layer so it composes with the entry and float animations. */
+.hero__tilt {
+  height: 100%;
+  transform: perspective(1400px) rotateY(calc(var(--px, 0) * 11deg))
+    rotateX(calc(var(--py, 0) * -8deg)) translate3d(calc(var(--px, 0) * 2%), calc(var(--py, 0) * 1.5%), 0);
+  transform-style: preserve-3d;
+  transition: transform 900ms var(--ease-out);
+}
+
+/* Depth layers drift with the pointer — further layers move more. */
+.hero__orbit,
+.hero__speed,
+.hero__badge,
+.hero__spark,
+.hero__shadow {
+  transition: translate 1100ms var(--ease-out);
+}
+
+.hero__shadow {
+  translate: calc(var(--px, 0) * -14%) 0;
+}
+
+.hero__orbit {
+  translate: calc(var(--px, 0) * -1.25rem) calc(var(--py, 0) * -0.75rem);
+}
+
+.hero__speed {
+  translate: calc(var(--px, 0) * 1.5rem) calc(var(--py, 0) * 1rem);
+}
+
+.hero__badge {
+  translate: calc(var(--px, 0) * -1rem) calc(var(--py, 0) * -0.75rem);
+}
+
+.hero__spark--a {
+  translate: calc(var(--px, 0) * -2rem) calc(var(--py, 0) * -1.5rem);
+}
+
+.hero__spark--b {
+  translate: calc(var(--px, 0) * 2.25rem) calc(var(--py, 0) * 1.25rem);
+}
+
+.hero__spark--c {
+  translate: calc(var(--px, 0) * -1.25rem) calc(var(--py, 0) * 1.75rem);
+}
+
 .hero__shoe,
 .hero__shoe img {
   width: 100%;
@@ -382,6 +429,38 @@
 
   .hero__aside {
     animation-delay: 0.9s;
+  }
+}
+
+/* Scroll parallax: as the hero leaves, the wordmark lags behind while the
+   product turns slightly and recedes. Pure CSS, only where supported. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__wordmark {
+      animation: hero-wordmark-drift linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 100svh;
+    }
+
+    .hero__stage {
+      animation: hero-stage-recede linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 100svh;
+    }
+  }
+}
+
+@keyframes hero-wordmark-drift {
+  to {
+    translate: 0 14svh;
+    opacity: 0.35;
+  }
+}
+
+@keyframes hero-stage-recede {
+  to {
+    rotate: -7deg;
+    scale: 0.9;
   }
 }
 

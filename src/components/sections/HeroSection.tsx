@@ -1,6 +1,7 @@
 import { useRef, type CSSProperties } from 'react'
 import { siteConfig } from '../../config/site'
 import { useFitText } from '../../hooks/useFitText'
+import { usePointerParallax } from '../../hooks/usePointerParallax'
 import { HERO_IMAGE_SIZES } from '../../lib/productImage'
 import { ProductImage } from '../product/ProductImage'
 import { ButtonLink } from '../ui/Button'
@@ -16,6 +17,8 @@ export function HeroSection() {
   const wordmarkRef = useRef<HTMLSpanElement>(null)
   // The fitted size is shared on the section: spacing around the product depends on it.
   useFitText(wordmarkRef, heroRef)
+  // Pointer position drives the product tilt and the depth of the decor layers.
+  usePointerParallax(heroRef)
 
   return (
     <section ref={heroRef} className="hero" id="top" aria-labelledby="hero-title">
@@ -51,8 +54,10 @@ export function HeroSection() {
             <Orbit className="hero__orbit" />
             <SpeedLines className="hero__speed" />
             <div className="hero__product">
-              <div className="hero__float">
-                <ProductImage priority sizes={HERO_IMAGE_SIZES} className="hero__shoe" />
+              <div className="hero__tilt">
+                <div className="hero__float">
+                  <ProductImage priority sizes={HERO_IMAGE_SIZES} className="hero__shoe" />
+                </div>
               </div>
               <span className="hero__shadow" aria-hidden="true" />
             </div>
