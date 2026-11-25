@@ -7,7 +7,7 @@ import { formatPrice } from '../../lib/format'
 import { scrollToHash } from '../../lib/scroll'
 import { Button, ButtonLink } from '../ui/Button'
 import { Sparkle } from '../ui/Decor'
-import { ArrowRightIcon, CloseIcon } from '../ui/Icons'
+import { ArrowRightIcon, CloseIcon, MailIcon } from '../ui/Icons'
 import { CartLineItem } from './CartLineItem'
 import './CartDrawer.css'
 
@@ -35,6 +35,14 @@ export function CartDrawer() {
   }
 
   const { checkoutUrl } = siteConfig.commerce
+  // Until checkout exists, a configured contact email turns the dead end into a lead.
+  const notifyHref = siteConfig.contact.email
+    ? `mailto:${siteConfig.contact.email}?subject=${encodeURIComponent(
+        `Notify me: ${siteConfig.product.name} ${siteConfig.product.colorway}`,
+      )}&body=${encodeURIComponent(
+        `Hi! Please let me know when the ${siteConfig.product.name} “${siteConfig.product.colorway}” is available.\n\nSizes I'm interested in: ${items.map((item) => item.size).join(', ')}`,
+      )}`
+    : null
 
   return (
     <div
@@ -114,6 +122,11 @@ export function CartDrawer() {
                     Online checkout isn’t available yet.
                     {import.meta.env.DEV ? ' (Dev: set commerce.checkoutUrl in src/config/site.ts.)' : null}
                   </p>
+                  {notifyHref ? (
+                    <ButtonLink variant="ghost" block href={notifyHref} icon={<MailIcon size={18} />}>
+                      Notify me at launch
+                    </ButtonLink>
+                  ) : null}
                 </>
               )}
 
