@@ -1,4 +1,5 @@
-import type { CSSProperties } from 'react'
+import { useRef, type CSSProperties } from 'react'
+import { useScrollVelocityPlayback } from '../../hooks/useScrollVelocityPlayback'
 import { Sparkle } from './Decor'
 import './Marquee.css'
 
@@ -28,6 +29,9 @@ export function Marquee({
   repeat = 2,
   className,
 }: MarqueeProps) {
+  const trackRef = useRef<HTMLDivElement>(null)
+  useScrollVelocityPlayback(trackRef)
+
   const style = { '--tilt': `${tilt}deg`, '--duration': `${duration}s` } as CSSProperties
   const sequence = Array.from({ length: repeat }, () => items).flat()
   const group = (
@@ -49,7 +53,7 @@ export function Marquee({
       style={style}
       aria-hidden="true"
     >
-      <div className="marquee__track">
+      <div ref={trackRef} className="marquee__track">
         {group}
         {group}
       </div>
