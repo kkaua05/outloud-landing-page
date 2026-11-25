@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useCart } from '../../cart/useCart'
 import { siteConfig } from '../../config/site'
 import { formatPrice } from '../../lib/format'
+import { prefersReducedMotion } from '../../lib/scroll'
 import { ProductGallery } from '../product/ProductGallery'
 import { SizeSelector } from '../product/SizeSelector'
 import { Button } from '../ui/Button'
@@ -36,8 +37,9 @@ export function ProductDetails() {
     const selector = selectorRef.current
     if (!selector) return
     selector.querySelector<HTMLInputElement>('input:not(:disabled)')?.focus({ preventScroll: true })
-    selector.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const reduceMotion = prefersReducedMotion()
+    selector.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' })
+    if (!reduceMotion) {
       selector.querySelector('.size-selector__grid')?.animate(
         [
           { transform: 'translateX(0)' },
