@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type MouseEvent } from 'react'
 import { useCart } from '../../cart/useCart'
 import { siteConfig } from '../../config/site'
+import { flyToBag } from '../../lib/flyToBag'
 import { formatPrice } from '../../lib/format'
 import { prefersReducedMotion } from '../../lib/media'
+import { productImage } from '../../lib/productImage'
 import { ProductGallery } from '../product/ProductGallery'
 import { SizeSelector } from '../product/SizeSelector'
 import { Button } from '../ui/Button'
@@ -15,11 +17,12 @@ const { product } = siteConfig
 const SIZE_ERROR = 'Select a size to add this pair to your bag.'
 
 export function ProductDetails() {
-  const { addItem } = useCart()
+  const { addItem, openCart } = useCart()
   const [size, setSize] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [justAdded, setJustAdded] = useState(false)
   const selectorRef = useRef<HTMLFieldSetElement>(null)
+  const stageRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!justAdded) return
@@ -53,13 +56,19 @@ export function ProductDetails() {
     }
   }
 
-  const handleAdd = () => {
+  const handleAdd = (event: MouseEvent<HTMLButtonElement>) => {
     if (!size) {
       flagMissingSize()
       return
     }
-    addItem(size)
+    const trigger = event.currentTarget
+    // The line is added (and announced) at once; the bag opens when the
+    // product lands in it, so the flight is never hidden by the drawer.
+    addItem(size, { open: false })
     setJustAdded(true)
+    void flyToBag([stageRef.current?.querySelector('.gallery__main'), trigger], productImage.thumb).then(
+      openCart,
+    )
   }
 
   const noSizesAvailable = !product.sizes.some((option) => option.available)
@@ -67,7 +76,7 @@ export function ProductDetails() {
   return (
     <section className="details" id="shop" aria-labelledby="details-title">
       <div className="container details__grid">
-        <div className="details__stage" data-reveal="fade">
+        <div ref={stageRef} className="details__stage" data-reveal="fade">
           <CornerMarks />
           <span className="details__stage-word" aria-hidden="true">
             Dunk

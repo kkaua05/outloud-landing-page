@@ -104,6 +104,16 @@ body::after {
   }
 }
 
+/* Product thumbnail flying into the bag (lib/flyToBag.ts) */
+.bag-flight {
+  position: fixed;
+  z-index: var(--z-overlay);
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 1rem 1rem color-mix(in srgb, var(--ink) 25%, transparent));
+  will-change: transform, opacity;
+}
+
 /* ── App shell ─────────────────────────────────────────────── */
 .app {
   overflow-x: clip;

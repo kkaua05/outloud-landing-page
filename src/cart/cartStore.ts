@@ -138,13 +138,18 @@ export function saveItems(items: CartItem[]) {
 
 /* ── Context ────────────────────────────────────────────────── */
 
+export interface AddItemOptions {
+  /** Open the bag drawer right away (default `true`). */
+  open?: boolean
+}
+
 export interface CartContextValue {
   items: CartItem[]
   isOpen: boolean
   itemCount: number
   /** `null` when the product has no configured price. */
   subtotal: number | null
-  addItem: (size: string) => void
+  addItem: (size: string, options?: AddItemOptions) => void
   setQuantity: (size: string, quantity: number) => void
   removeItem: (size: string) => void
   openCart: () => void

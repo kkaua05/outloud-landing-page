@@ -6,6 +6,7 @@ import {
   loadItems,
   saveItems,
   subscribeToItems,
+  type AddItemOptions,
   type CartContextValue,
   type CartItem,
 } from './cartStore'
@@ -38,9 +39,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const addItem = useCallback(
-    (size: string) => {
+    (size: string, options?: AddItemOptions) => {
       dispatch({ type: 'add', productId: product.id, size, max: MAX })
-      dispatch({ type: 'open' })
+      if (options?.open ?? true) dispatch({ type: 'open' })
       announce(`${product.name} ${product.colorway}, size ${size}, added to your bag.`)
     },
     [announce],

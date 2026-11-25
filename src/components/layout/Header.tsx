@@ -64,6 +64,7 @@ export function Header({ menuOpen, onMenuOpen }: HeaderProps) {
             onClick={openCart}
             aria-haspopup="dialog"
             aria-label={`Open bag, ${itemCount} ${itemCount === 1 ? 'item' : 'items'}`}
+            data-bag-target
           >
             <BagIcon size={20} />
             {itemCount > 0 ? (
