@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type MouseEvent } from 'react'
 import { useCart } from '../../cart/useCart'
+import { useBuyBarVisibility } from '../../hooks/useBuyBarVisibility'
 import { siteConfig } from '../../config/site'
 import { flyToBag } from '../../lib/flyToBag'
 import { formatPrice } from '../../lib/format'
@@ -7,6 +8,7 @@ import { prefersReducedMotion } from '../../lib/media'
 import { productImage } from '../../lib/productImage'
 import { ProductGallery } from '../product/ProductGallery'
 import { SizeSelector } from '../product/SizeSelector'
+import { StickyBuyBar } from '../product/StickyBuyBar'
 import { Button } from '../ui/Button'
 import { CornerMarks, Sparkle } from '../ui/Decor'
 import { BagIcon, CheckIcon } from '../ui/Icons'
@@ -23,6 +25,8 @@ export function ProductDetails() {
   const [justAdded, setJustAdded] = useState(false)
   const selectorRef = useRef<HTMLFieldSetElement>(null)
   const stageRef = useRef<HTMLDivElement>(null)
+  const purchaseRef = useRef<HTMLDivElement>(null)
+  const buyBarVisible = useBuyBarVisibility(purchaseRef)
 
   useEffect(() => {
     if (!justAdded) return
@@ -115,7 +119,7 @@ export function ProductDetails() {
             {product.summary}
           </p>
 
-          <div className="details__purchase" data-reveal>
+          <div ref={purchaseRef} className="details__purchase" data-reveal>
             <div className="details__price-row">
               <span className="micro details__price-label">Price</span>
               <p className={['details__price', product.price === null && 'is-on-request'].filter(Boolean).join(' ')}>
@@ -147,6 +151,14 @@ export function ProductDetails() {
           </div>
         </div>
       </div>
+
+      <StickyBuyBar
+        visible={buyBarVisible}
+        size={size}
+        justAdded={justAdded}
+        disabled={noSizesAvailable}
+        onAdd={handleAdd}
+      />
     </section>
   )
 }
