@@ -19,8 +19,10 @@ export function useFitText(
     const target = varTarget?.current ?? container
 
     let frame = 0
+    let disposed = false
 
     const fit = () => {
+      if (disposed) return
       cancelAnimationFrame(frame)
       frame = requestAnimationFrame(() => {
         const styles = getComputedStyle(container)
@@ -43,6 +45,8 @@ export function useFitText(
     document.fonts?.ready.then(fit).catch(() => undefined)
 
     return () => {
+      // `fonts.ready` may resolve after unmount — never touch a detached node.
+      disposed = true
       cancelAnimationFrame(frame)
       observer.disconnect()
     }
