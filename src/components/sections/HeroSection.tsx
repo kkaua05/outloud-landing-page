@@ -42,7 +42,7 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="hero__visual">
+        <div className="hero__visual" data-cursor="New drop">
           {/* The brand wordmark works as a graphic layer behind the product. */}
           <p className="hero__wordmark" aria-hidden="true">
             <span className="hero__wordmark-line hero__wordmark-line--echo">{brand.name}</span>

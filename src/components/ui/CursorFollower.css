@@ -1,0 +1,94 @@
+/* Cursor follower — two fixed layers moved by translate3d from JS.
+   The ring blends with `difference` so it reads on pink, cream and royal
+   alike; the label is a separate, unblended layer so its text stays crisp. */
+.cursor-ring,
+.cursor-label {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: calc(var(--z-drawer) + 6);
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform;
+}
+
+.cursor-ring.is-visible,
+.cursor-label.is-visible.has-label {
+  opacity: 1;
+}
+
+.cursor-ring::before {
+  content: '';
+  position: absolute;
+  top: -1.125rem;
+  left: -1.125rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1.5px solid var(--cream);
+  border-radius: 50%;
+  transition:
+    scale var(--dur-base) var(--ease-out),
+    background-color var(--dur-base) var(--ease-out),
+    opacity var(--dur-base) var(--ease-out);
+}
+
+.cursor-ring {
+  mix-blend-mode: difference;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+
+/* Over interactive elements the ring opens up but stays hollow, so it
+   never hides the label underneath. */
+.cursor-ring.is-active::before {
+  scale: 1.9;
+  border-style: dashed;
+}
+
+.cursor-ring.is-pressed::before {
+  scale: 0.8;
+}
+
+.cursor-ring.is-active.is-pressed::before {
+  scale: 1.35;
+}
+
+.cursor-ring.has-label::before {
+  opacity: 0;
+  scale: 0.4;
+}
+
+/* The pill is centred on the pointer and pops in with a spring. */
+.cursor-label {
+  transition: opacity var(--dur-base) var(--ease-out);
+  font-size: var(--fs-micro);
+  font-weight: 700;
+  letter-spacing: var(--tracking-micro);
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ink);
+}
+
+.cursor-label.has-label {
+  translate: -50% -50%;
+  padding: 0.625rem 0.875rem;
+  border-radius: var(--radius-pill);
+  background: var(--pink);
+  box-shadow: 3px 3px 0 0 var(--ink);
+  animation: cursor-label-in 420ms var(--ease-spring) both;
+}
+
+@keyframes cursor-label-in {
+  from {
+    scale: 0.4;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+@media print {
+  .cursor-ring,
+  .cursor-label {
+    display: none;
+  }
+}

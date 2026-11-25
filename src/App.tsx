@@ -9,6 +9,7 @@ import { CampaignSection } from './components/sections/CampaignSection'
 import { HeroSection } from './components/sections/HeroSection'
 import { ProductDetails } from './components/sections/ProductDetails'
 import { ProductStory } from './components/sections/ProductStory'
+import { CursorFollower } from './components/ui/CursorFollower'
 import { useRevealOnScroll } from './hooks/useRevealOnScroll'
 
 const DESKTOP_QUERY = '(min-width: 901px)'
@@ -53,6 +54,7 @@ export default function App() {
 
       <MobileMenu open={menuOpen} onClose={closeMenu} />
       <CartDrawer />
+      <CursorFollower />
     </>
   )
 }

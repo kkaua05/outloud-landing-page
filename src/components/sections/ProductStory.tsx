@@ -47,7 +47,7 @@ export function ProductStory() {
           ))}
         </ul>
 
-        <figure className="story__visual" data-reveal="scale">
+        <figure className="story__visual" data-reveal="scale" data-cursor="Iconic">
           <div className="story__frame">
             <span className="story__frame-word" aria-hidden="true">
               Dunk High

@@ -44,7 +44,7 @@ export function CampaignSection() {
           </span>
         </h2>
 
-        <div className="campaign__visual" data-reveal="scale">
+        <div className="campaign__visual" data-reveal="scale" data-cursor="Own it">
           <span className="campaign__sun" aria-hidden="true" />
           <span className="campaign__ring" aria-hidden="true" />
           <SpeedLines className="campaign__speed" />
