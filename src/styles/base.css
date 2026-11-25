@@ -195,6 +195,37 @@ main:focus {
     opacity: 1;
     transform: none;
   }
+
+  /* Masked headings: the heading stays put, each line rises out of a
+     mask. Only the bottom edge is clipped, so decorations that overflow
+     the line box (sparkles, scribbles) are never cut. */
+  .reveal-ready [data-reveal='mask'] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .reveal-ready [data-reveal='mask'] .mask-line {
+    clip-path: inset(-50% -50% -0.04em -50%);
+  }
+
+  .reveal-ready [data-reveal='mask'] .mask-line__inner {
+    transform: translate3d(0, 108%, 0) rotate(3deg);
+    transform-origin: 0 100%;
+    transition: transform 1100ms var(--ease-out);
+    transition-delay: calc(var(--reveal-delay, 0) * 1ms + var(--line, 0) * 110ms);
+  }
+
+  .reveal-ready [data-reveal='mask'].is-revealed .mask-line__inner {
+    transform: none;
+  }
+}
+
+.mask-line {
+  display: block;
+}
+
+.mask-line__inner {
+  display: inline-block;
 }
 
 @media (prefers-reduced-motion: reduce) {

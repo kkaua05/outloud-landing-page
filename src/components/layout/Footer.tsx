@@ -3,6 +3,7 @@ import { navItems } from '../../config/navigation'
 import { siteConfig } from '../../config/site'
 import { useFitText } from '../../hooks/useFitText'
 import { ButtonLink } from '../ui/Button'
+import { MaskLine } from '../ui/MaskLine'
 import { Sparkle } from '../ui/Decor'
 import { ArrowRightIcon, ArrowUpIcon, ArrowUpRightIcon, InstagramIcon, MailIcon } from '../ui/Icons'
 import './Footer.css'
@@ -17,10 +18,10 @@ export function Footer() {
   return (
     <footer className="footer" id="contact" aria-labelledby="footer-title">
       <div className="container footer__inner">
-        <div className="footer__cta" data-reveal>
-          <h2 id="footer-title" className="footer__title display">
-            Ready to <br />
-            make your move?
+        <div className="footer__cta">
+          <h2 id="footer-title" className="footer__title display" data-reveal="mask">
+            <MaskLine index={0}>Ready to</MaskLine>
+            <MaskLine index={1}>make your move?</MaskLine>
           </h2>
           <ButtonLink variant="cream" href="#shop" icon={<ArrowRightIcon size={18} />}>
             Shop the drop

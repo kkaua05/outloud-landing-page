@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react'
 import { CircleBadge, Scribble, Sparkle } from '../ui/Decor'
+import { MaskLine } from '../ui/MaskLine'
 import './BrandStatement.css'
 
 export function BrandStatement() {
@@ -10,13 +11,15 @@ export function BrandStatement() {
           <span className="section-index__num">05</span> About
         </p>
 
-        <h2 id="statement-title" className="statement__title display" data-reveal>
-          Not made <br />
-          to{' '}
-          <span className="statement__strike">
-            blend in.
-            <Scribble className="statement__scribble" />
-          </span>
+        <h2 id="statement-title" className="statement__title display" data-reveal="mask">
+          <MaskLine index={0}>Not made</MaskLine>
+          <MaskLine index={1}>
+            to{' '}
+            <span className="statement__strike">
+              blend in.
+              <Scribble className="statement__scribble" />
+            </span>
+          </MaskLine>
         </h2>
 
         <div className="statement__aside" data-reveal style={{ '--reveal-delay': 160 } as CSSProperties}>

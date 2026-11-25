@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react'
 import { siteConfig } from '../../config/site'
 import { ProductImage } from '../product/ProductImage'
 import { CircleBadge, Sparkle } from '../ui/Decor'
+import { MaskLine } from '../ui/MaskLine'
 import './ProductStory.css'
 
 const { product } = siteConfig
@@ -16,9 +17,12 @@ export function ProductStory() {
           <span className="section-index__num">02</span> The story
         </p>
 
-        <h2 id="story-title" className="story__title display" data-reveal>
-          More than <br />a <span className="story__title-accent">sneaker.</span>
-          <Sparkle className="story__title-spark" />
+        <h2 id="story-title" className="story__title display" data-reveal="mask">
+          <MaskLine index={0}>More than</MaskLine>
+          <MaskLine index={1}>
+            a <span className="story__title-accent">sneaker.</span>
+            <Sparkle className="story__title-spark" />
+          </MaskLine>
         </h2>
 
         <p className="story__text" data-reveal style={{ '--reveal-delay': 120 } as CSSProperties}>
