@@ -1,0 +1,64 @@
+/* Release countdown pill — inherits colour, so it fits any section. */
+.countdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  letter-spacing: var(--tracking-micro);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.countdown__dot {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--royal);
+}
+
+.countdown.is-live .countdown__dot {
+  background: var(--pink);
+  animation: pulse-dot 2.2s var(--ease-out) infinite;
+}
+
+.countdown__units {
+  display: inline-flex;
+  gap: 0.375rem;
+  /* Fixed-width digits: the pill never jitters as seconds change. */
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown__unit {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.countdown__suffix {
+  margin-left: 0.0625rem;
+  opacity: 0.6;
+}
+
+/* Product block variant: full-width royal strip above the price. */
+.details__countdown {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding: 0.875rem 1rem;
+  border-radius: var(--radius-s);
+  background: var(--royal);
+  color: var(--cream);
+}
+
+.details__countdown .countdown__dot {
+  background: var(--pink);
+}
+
+.details__countdown .countdown__label {
+  margin-right: auto;
+}
+
+.details__countdown .countdown__units {
+  font-size: 0.875rem;
+}

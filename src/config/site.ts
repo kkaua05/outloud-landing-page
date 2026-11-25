@@ -70,6 +70,16 @@ export const siteConfig = {
     maxQuantityPerLine: 10,
   },
 
+  drop: {
+    /**
+     * Release date and time as ISO 8601 with offset,
+     * e.g. "2026-12-12T10:00:00-03:00". Shows a live countdown in the
+     * hero and product block, then “Live now” once it has passed.
+     * Empty = no countdown is shown (nothing is invented).
+     */
+    startsAt: '',
+  },
+
   commerce: {
     /**
      * External checkout URL (Shopify, Stripe Payment Link, etc.).

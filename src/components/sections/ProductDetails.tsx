@@ -11,6 +11,7 @@ import { SizeSelector } from '../product/SizeSelector'
 import { StickyBuyBar } from '../product/StickyBuyBar'
 import { Button } from '../ui/Button'
 import { CornerMarks, Sparkle } from '../ui/Decor'
+import { DropCountdown } from '../ui/DropCountdown'
 import { BagIcon, CheckIcon } from '../ui/Icons'
 import './ProductDetails.css'
 
@@ -120,6 +121,7 @@ export function ProductDetails() {
           </p>
 
           <div ref={purchaseRef} className="details__purchase" data-reveal>
+            <DropCountdown className="details__countdown" />
             <div className="details__price-row">
               <span className="micro details__price-label">Price</span>
               <p className={['details__price', product.price === null && 'is-on-request'].filter(Boolean).join(' ')}>

@@ -2,10 +2,12 @@ import { useRef, type CSSProperties } from 'react'
 import { siteConfig } from '../../config/site'
 import { useFitText } from '../../hooks/useFitText'
 import { usePointerParallax } from '../../hooks/usePointerParallax'
+import { dropStartsAt } from '../../lib/drop'
 import { HERO_IMAGE_SIZES } from '../../lib/productImage'
 import { ProductImage } from '../product/ProductImage'
 import { ButtonLink } from '../ui/Button'
 import { CircleBadge, Orbit, Sparkle, SpeedLines } from '../ui/Decor'
+import { DropCountdown } from '../ui/DropCountdown'
 import { ArrowDownIcon, ArrowRightIcon } from '../ui/Icons'
 import { Marquee } from '../ui/Marquee'
 import './HeroSection.css'
@@ -24,10 +26,14 @@ export function HeroSection() {
     <section ref={heroRef} className="hero" id="top" aria-labelledby="hero-title">
       <div className="hero__inner">
         <div className="hero__meta">
-          <p className="hero__tag micro">
-            <span className="hero__tag-dot" aria-hidden="true" />
-            New drop — {product.colorway}
-          </p>
+          {dropStartsAt === null ? (
+            <p className="hero__tag micro">
+              <span className="hero__tag-dot" aria-hidden="true" />
+              New drop — {product.colorway}
+            </p>
+          ) : (
+            <DropCountdown className="hero__tag" />
+          )}
           <div className="hero__meta-group">
             <p className="hero__meta-item micro">
               <Sparkle className="hero__meta-spark" /> Street culture
