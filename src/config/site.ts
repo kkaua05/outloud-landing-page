@@ -49,7 +49,7 @@ export const siteConfig = {
     price: null as number | null,
     currency: 'BRL',
     /** Locale used to format the price. */
-    locale: 'pt-BR',
+    locale: 'en-US',
     /** Label shown next to sizes, e.g. "BR", "US", "EU". */
     sizeSystem: 'BR',
     /**

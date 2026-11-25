@@ -21,9 +21,9 @@ export function ProductStory() {
           <Sparkle className="story__title-spark" />
         </h2>
 
-        <p className="story__text" lang="pt-BR" data-reveal style={{ '--reveal-delay': 120 } as CSSProperties}>
-          Uma silhueta clássica que atravessa gerações. O contraste entre o azul Royal e o branco
-          transforma o Dunk High em uma peça de personalidade, atitude e expressão.
+        <p className="story__text" data-reveal style={{ '--reveal-delay': 120 } as CSSProperties}>
+          A classic silhouette that has crossed generations. The contrast between Royal blue and white
+          turns the Dunk High into a statement of personality, attitude and expression.
         </p>
 
         <ul className="story__pillars" aria-label="Highlights">

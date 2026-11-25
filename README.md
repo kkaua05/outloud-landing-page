@@ -159,7 +159,7 @@ Tudo o que é comercial ou de marca fica em [`src/config/site.ts`](src/config/si
 | --- | --- | --- |
 | `brand.name` | Nome da marca (UI, wordmarks, `<title>`, Open Graph) | `OUTLOUD` (provisório) |
 | `product.price` | Preço unitário; `null` mostra “Price on request” | não definido |
-| `product.currency` / `locale` | Formatação do preço | `BRL` / `pt-BR` |
+| `product.currency` / `locale` | Formatação do preço | `BRL` / `en-US` |
 | `product.sizes` | Numerações e disponibilidade manual | 37–44 (sem ligação a estoque) |
 | `commerce.checkoutUrl` | Checkout externo (Shopify, Stripe Payment Link…) | não definido |
 | `contact.*` | E-mail e Instagram do rodapé | não definido |
