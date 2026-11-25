@@ -32,7 +32,7 @@ export const siteConfig = {
       'Nike Dunk High in Game Royal: royal blue and white, presented by ' +
       `${brandName}. Classic silhouette. Unmistakable attitude. Make your move.`,
     /** Absolute production URL (e.g. "https://outloud.com"). Used for Open Graph. */
-    siteUrl: '',
+    siteUrl: 'https://outloud-page.kauafesilva05.workers.dev',
   },
 
   product: {
