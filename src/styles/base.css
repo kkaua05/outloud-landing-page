@@ -83,6 +83,27 @@ p {
   outline-offset: 3px;
 }
 
+/* ── Film grain ────────────────────────────────────────────── */
+/* Print-like texture over the whole page. Inline SVG noise (no request),
+   a plain translucent layer (no blend mode, so it costs nothing on
+   scroll) and never intercepts the pointer. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-drawer) + 5);
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.055 0 0 0 0 0.043 0 0 0 0 0.086 1.7 0 0 0 -0.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+@media print, (forced-colors: active) {
+  body::after {
+    display: none;
+  }
+}
+
 /* ── App shell ─────────────────────────────────────────────── */
 .app {
   overflow-x: clip;
