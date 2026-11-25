@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { FINE_POINTER_QUERY, REDUCED_MOTION_QUERY, allowsPointerMotion } from '../../lib/media'
+import { whilePointerMotionAllowed } from '../../lib/media'
 import './CursorFollower.css'
 
 const INTERACTIVE = 'a[href], button:not(:disabled), label, input:not(:disabled), [role="button"]'
@@ -22,11 +22,9 @@ export function CursorFollower() {
     const label = labelRef.current
     if (!ring || !label) return
 
-    const queries = [window.matchMedia(FINE_POINTER_QUERY), window.matchMedia(REDUCED_MOTION_QUERY)]
     const target = { x: -100, y: -100 }
     const current = { x: -100, y: -100 }
     let frame = 0
-    let attached = false
 
     const place = () => {
       const transform = `translate3d(${current.x}px, ${current.y}px, 0)`
@@ -76,37 +74,23 @@ export function CursorFollower() {
       if (!event.relatedTarget) setState('is-visible', false)
     }
 
-    const attach = () => {
-      if (attached) return
-      document.addEventListener('pointermove', onMove, { passive: true })
-      document.addEventListener('pointerover', onOver, { passive: true })
-      document.addEventListener('pointerdown', onDown, { passive: true })
-      document.addEventListener('pointerup', onUp, { passive: true })
-      document.addEventListener('pointerout', onLeave, { passive: true })
-      attached = true
-    }
+    const listeners = [
+      ['pointermove', onMove],
+      ['pointerover', onOver],
+      ['pointerdown', onDown],
+      ['pointerup', onUp],
+      ['pointerout', onLeave],
+    ] as const
 
-    const detach = () => {
-      if (!attached) return
-      document.removeEventListener('pointermove', onMove)
-      document.removeEventListener('pointerover', onOver)
-      document.removeEventListener('pointerdown', onDown)
-      document.removeEventListener('pointerup', onUp)
-      document.removeEventListener('pointerout', onLeave)
-      cancelAnimationFrame(frame)
-      frame = 0
-      ;['is-visible', 'is-active', 'has-label', 'is-pressed'].forEach((name) => setState(name, false))
-      attached = false
-    }
-
-    const sync = () => (allowsPointerMotion() ? attach() : detach())
-    sync()
-    queries.forEach((query) => query.addEventListener('change', sync))
-
-    return () => {
-      queries.forEach((query) => query.removeEventListener('change', sync))
-      detach()
-    }
+    return whilePointerMotionAllowed(() => {
+      listeners.forEach(([type, listener]) => document.addEventListener(type, listener, { passive: true }))
+      return () => {
+        listeners.forEach(([type, listener]) => document.removeEventListener(type, listener))
+        cancelAnimationFrame(frame)
+        frame = 0
+        ;['is-visible', 'is-active', 'has-label', 'is-pressed'].forEach((name) => setState(name, false))
+      }
+    })
   }, [])
 
   return (
