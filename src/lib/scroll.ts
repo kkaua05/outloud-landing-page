@@ -1,4 +1,4 @@
-export const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+import { prefersReducedMotion } from './media'
 
 /**
  * Smooth-scrolls to an in-page anchor and moves keyboard focus there,
