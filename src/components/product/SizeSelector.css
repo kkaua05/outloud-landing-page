@@ -76,6 +76,54 @@
   transform: scale(1.04);
 }
 
+/* Selection "stamp": a springy press plus a sparkle popping on the corner. */
+/* Lift the selected size so its sparkle is never covered by a neighbour. */
+.size-option.is-selected {
+  z-index: 1;
+}
+
+.size-option__spark {
+  position: absolute;
+  top: -0.625rem;
+  right: -0.625rem;
+  font-size: 1.25rem;
+  color: var(--pink);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .size-option.is-selected .size-option__label {
+    animation: size-stamp 480ms var(--ease-spring);
+  }
+
+  .size-option__spark {
+    animation: size-spark-pop 560ms var(--ease-spring) both;
+  }
+}
+
+@keyframes size-stamp {
+  0% {
+    transform: scale(0.9) rotate(-4deg);
+  }
+  60% {
+    transform: scale(1.1) rotate(1deg);
+  }
+  100% {
+    transform: scale(1.04);
+  }
+}
+
+@keyframes size-spark-pop {
+  from {
+    opacity: 0;
+    transform: scale(0) rotate(-90deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .size-option__input:focus-visible + .size-option__label {
   outline: 2px solid var(--royal);
   outline-offset: 3px;

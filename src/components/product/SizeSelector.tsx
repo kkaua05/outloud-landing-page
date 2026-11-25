@@ -1,5 +1,6 @@
 import { useId, type Ref } from 'react'
 import type { SizeOption } from '../../config/site'
+import { Sparkle } from '../ui/Decor'
 import './SizeSelector.css'
 
 interface SizeSelectorProps {
@@ -53,6 +54,7 @@ export function SizeSelector({ sizes, system, value, onChange, error, ref }: Siz
               <span className="size-option__label">
                 {size.label}
                 {!size.available ? <span className="sr-only"> — unavailable</span> : null}
+                {selected ? <Sparkle className="size-option__spark" /> : null}
               </span>
             </label>
           )
