@@ -160,7 +160,10 @@
   height: 2.75rem;
   border: var(--border) solid currentColor;
   border-radius: 50%;
+  /* Magnetic pull (useMagneticButtons) — independent of the press scale. */
+  translate: var(--mag-x, 0px) var(--mag-y, 0px);
   transition:
+    translate var(--dur-base) var(--ease-out),
     background-color var(--dur-base) var(--ease-out),
     color var(--dur-base) var(--ease-out),
     transform var(--dur-base) var(--ease-out);

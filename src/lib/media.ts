@@ -14,3 +14,30 @@ export const hasFinePointer = () => matches(FINE_POINTER_QUERY)
 
 /** Pointer-driven motion is allowed: precise pointer and no reduced-motion preference. */
 export const allowsPointerMotion = () => hasFinePointer() && !prefersReducedMotion()
+
+/**
+ * Runs `enable` while pointer-driven motion is allowed and calls the
+ * teardown it returns as soon as it is not (e.g. the user switches on
+ * reduced motion or plugs in a touch screen). Returns a full cleanup.
+ */
+export function whilePointerMotionAllowed(enable: () => () => void) {
+  const queries = [window.matchMedia(FINE_POINTER_QUERY), window.matchMedia(REDUCED_MOTION_QUERY)]
+  let disable: (() => void) | null = null
+
+  const sync = () => {
+    if (allowsPointerMotion()) {
+      disable ??= enable()
+    } else if (disable) {
+      disable()
+      disable = null
+    }
+  }
+
+  sync()
+  queries.forEach((query) => query.addEventListener('change', sync))
+  return () => {
+    queries.forEach((query) => query.removeEventListener('change', sync))
+    disable?.()
+    disable = null
+  }
+}

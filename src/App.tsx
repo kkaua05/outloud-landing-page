@@ -10,6 +10,7 @@ import { HeroSection } from './components/sections/HeroSection'
 import { ProductDetails } from './components/sections/ProductDetails'
 import { ProductStory } from './components/sections/ProductStory'
 import { CursorFollower } from './components/ui/CursorFollower'
+import { useMagneticButtons } from './hooks/useMagneticButtons'
 import { useRevealOnScroll } from './hooks/useRevealOnScroll'
 
 const DESKTOP_QUERY = '(min-width: 901px)'
@@ -20,6 +21,7 @@ export default function App() {
   const overlayOpen = menuOpen || cartOpen
 
   useRevealOnScroll()
+  useMagneticButtons()
 
   const openMenu = useCallback(() => setMenuOpen(true), [])
   const closeMenu = useCallback(() => setMenuOpen(false), [])

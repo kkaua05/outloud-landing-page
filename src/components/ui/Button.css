@@ -27,7 +27,10 @@
   text-transform: uppercase;
   white-space: nowrap;
   box-shadow: 0 0 0 0 var(--btn-shadow);
+  /* Magnetic pull (useMagneticButtons) — independent of the hover transform. */
+  translate: var(--mag-x, 0px) var(--mag-y, 0px);
   transition:
+    translate var(--dur-base) var(--ease-out),
     transform var(--dur-base) var(--ease-out),
     box-shadow var(--dur-base) var(--ease-out),
     background-color var(--dur-base) var(--ease-out),
