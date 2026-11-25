@@ -8,7 +8,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white&labelColor=0e0b16)
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white&labelColor=0e0b16)
 ![CSS](https://img.shields.io/badge/CSS-puro%20%C2%B7%20sem%20frameworks-FC3B7F?labelColor=0e0b16)
-![Bundle](https://img.shields.io/badge/p%C3%A1gina-202%20KB-0032A8?labelColor=0e0b16)
+![Bundle](https://img.shields.io/badge/p%C3%A1gina-207%20KB-0032A8?labelColor=0e0b16)
 ![CLS](https://img.shields.io/badge/CLS-0-success?labelColor=0e0b16)
 ![License](https://img.shields.io/badge/license-MIT-FEF1CF?labelColor=0e0b16)
 [![ZYNK](https://img.shields.io/badge/desenvolvido%20por-ZYNK%20Solu%C3%A7%C3%B5es%20Digitais-6D28D9?labelColor=0e0b16)](https://www.instagram.com/zynk.solutions/)
@@ -46,8 +46,8 @@
 | **Hero adaptável** | O wordmark preenche exatamente a largura da tela para qualquer nome de marca (hook `useFitText`), com o produto sobreposto em camadas controladas. |
 | **Carrinho sem biblioteca de estado** | `useReducer` + Context, reducer puro e testável, persistência defensiva em `localStorage` que descarta dados inválidos. |
 | **Acessibilidade de verdade** | Radios nativos no seletor de tamanho, focus trap em menu e carrinho, `inert` no conteúdo de fundo, live region para anúncios, skip link, retorno de foco ao fechar. |
-| **Performance** | Imagens em AVIF/WebP com `srcset`, dimensões fixas (CLS 0), fontes self-hosted com preload, imagem do hero preloaded, JS de 79 KB gzip (quase tudo é React). |
-| **Zero dependências de UI/animação** | Animações em CSS (scroll-timeline quando suportado), tudo desativado com `prefers-reduced-motion`. |
+| **Performance** | Imagens em AVIF/WebP com `srcset`, dimensões fixas (CLS 0), fontes self-hosted com preload, imagem do hero preloaded, JS de 83 KB gzip (quase tudo é React). |
+| **Zero dependências de UI/animação** | Animações em CSS (scroll-timeline quando suportado) e Web Animations API; efeitos de ponteiro escrevem variáveis CSS fora do React (sem re-render). Tudo desativado com `prefers-reduced-motion`. |
 | **Uma única fonte de configuração** | Marca, preço, tamanhos, checkout e contatos em um só arquivo; o `<head>` (SEO/Open Graph) é gerado a partir dele em build-time. |
 
 ---
@@ -110,12 +110,13 @@ src/
 ├── components/
 │   ├── layout/    Header · MobileMenu · Footer
 │   ├── sections/  HeroSection · ProductStory · ProductDetails · CampaignSection · BrandStatement
-│   ├── product/   ProductImage · ProductGallery · SizeSelector
+│   ├── product/   ProductImage · ProductGallery · SizeSelector · StickyBuyBar
 │   ├── cart/      CartDrawer · CartLineItem · QuantityStepper
-│   └── ui/        Button · Marquee · Decor (sparkle, badge, linhas) · Icons
+│   └── ui/        Button · Marquee · Decor · Icons · MaskLine · DropCountdown · CursorFollower
 ├── hooks/         useRevealOnScroll · useFitText · useFocusTrap · useScrollLock
-│                  useHeaderState · useActiveSection
-├── lib/           format · productImage · scroll
+│                  useHeaderState · useActiveSection · usePointerParallax
+│                  useMagneticButtons · useScrollVelocityPlayback · useBuyBarVisibility · useNow
+├── lib/           format · productImage · scroll · media · flyToBag · drop
 └── styles/        tokens.css · base.css
 public/            images (AVIF/WebP) · fonts (woff2) · favicons · og-image.jpg
 docs/screenshots/  imagens usadas neste README
@@ -133,6 +134,14 @@ Princípios: responsabilidade única por componente, lógica de domínio fora da
 - **Navegação** — âncoras com foco gerenciado, header que se recolhe ao rolar, indicação da seção ativa, menu mobile em tela cheia.
 - **Galeria** — recortes ampliados da mesma foto do produto (sem sugerir ângulos inexistentes).
 - **Movimento com critério** — entrada do hero, flutuação do tênis, marquee e reveal no scroll; tudo respeita `prefers-reduced-motion`.
+- **Hero interativo** — o tênis inclina em 3D seguindo o mouse, com camadas de profundidade (órbita, selo, estrelas) e parallax no scroll via `animation-timeline`.
+- **Títulos com máscara** — os títulos editoriais sobem linha a linha de dentro de uma máscara ao entrar na tela.
+- **Sacola voando** — ao adicionar, o tênis faz um arco até a sacola do header, que pulsa ao receber; a sacola abre quando ele chega.
+- **Barra de compra no mobile** — aparece quando o bloco de compra sai da tela, com tamanho selecionado, preço e botão.
+- **Contagem regressiva** — "Drop in 16d 17h 44m" no hero e no bloco de compra, virando "Live now" na data configurada.
+- **Cursor contextual e botões magnéticos** — anel elástico que reage a links e mostra rótulos em áreas visuais; botões levemente atraídos pelo cursor (só desktop com mouse).
+- **Marquee reativo** — acelera com a velocidade do scroll e inverte o sentido ao rolar para cima.
+- **Detalhes de acabamento** — textura de granulação editorial e efeito "carimbo" ao escolher o tamanho.
 
 ---
 
@@ -161,9 +170,10 @@ Tudo o que é comercial ou de marca fica em [`src/config/site.ts`](src/config/si
 | `product.price` | Preço unitário; `null` mostra “Price on request” | não definido |
 | `product.currency` / `locale` | Formatação do preço | `BRL` / `en-US` |
 | `product.sizes` | Numerações e disponibilidade manual | 37–44 (sem ligação a estoque) |
+| `drop.startsAt` | Data do lançamento (ISO 8601, ex. `2026-12-12T10:00:00-03:00`); ativa a contagem regressiva | não definido (contagem oculta) |
 | `commerce.checkoutUrl` | Checkout externo (Shopify, Stripe Payment Link…) | não definido |
-| `contact.*` | E-mail e Instagram do rodapé | não definido |
-| `seo.siteUrl` | URL de produção para Open Graph | não definido |
+| `contact.*` | E-mail e Instagram do rodapé; com e-mail e sem checkout, a sacola mostra "Notify me at launch" | não definido |
+| `seo.siteUrl` | URL de produção para Open Graph | `outloud-page.kauafesilva05.workers.dev` |
 
 ---
 
@@ -175,7 +185,7 @@ Medido no build de produção, em Chrome, com rede ~1,6 Mbps / 150 ms RTT e CPU 
 | --- | --- |
 | LCP (mobile throttled) | **2,36 s** |
 | CLS | **0** |
-| Peso total da página | **202 KB** (JS 79 KB gzip · CSS 10 KB gzip · imagem do hero 75 KB AVIF) |
+| Peso total da página | **207 KB** (JS 83 KB gzip · CSS 12 KB gzip · imagem do hero 75 KB AVIF) |
 | Larguras sem scroll horizontal | 320 · 360 · 375 · 390 · 414 · 768 · 1024 · 1280 · 1366 · 1440 · 1920 |
 | Erros/avisos no console | 0 |
 | `tsc -b` · `oxlint` | 0 erros · 0 avisos |
